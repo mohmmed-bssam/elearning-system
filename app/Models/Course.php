@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Trans;
 use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
+    use Trans;
     //
     protected $guarded = [];
 
@@ -34,9 +36,9 @@ class Course extends Model
         return $this->hasMany(Payment::class);
     }
 
-    public function images()
+    public function image()
     {
-        return $this->morphMany(Image::class, 'imageable');
+        return $this->morphOne(Image::class, 'imageable');
     }
     public function casts(): array
     {
