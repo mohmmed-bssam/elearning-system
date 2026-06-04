@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\EnrollmentController;
 use App\Http\Controllers\Admin\LessonController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\ProfileController;
@@ -32,6 +33,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(
                 Route::resource('sliders', SliderController::class);
                 Route::resource('categories', CategoryController::class);
                 Route::resource('services', ServiceController::class);
+                Route::resource('teachers', TeacherController::class);
+
                 Route::resource('teams', TeamController::class);
                 Route::resource('courses', CourseController::class);
                 Route::resource('lessons', LessonController::class);

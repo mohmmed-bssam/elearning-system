@@ -19,6 +19,12 @@
                     <x-nav-link :href="route('admin.sliders.index')" :active="request()->routeIs('admin.sliders.index')">
                         {{ __('admin.sliders') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.services.index')" :active="request()->routeIs('admin.services.index')">
+                        {{ __('admin.services') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.teachers.index')" :active="request()->routeIs('admin.teachers.index')">
+                        {{ __('admin.teachers') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.index')">
                         {{ __('admin.categories') }}
                     </x-nav-link>

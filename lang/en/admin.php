@@ -3,6 +3,7 @@
         'dashboard' => 'Dashboard',
         'users' => 'Users',
         'settings' => 'Settings',
+        'teachers' => 'Teachers',
         'logout' => 'Logout',
         'sliders' => 'Sliders',
         'categories' => 'Categories',
