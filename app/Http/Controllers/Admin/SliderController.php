@@ -53,7 +53,7 @@ class SliderController extends Controller
             ],
 
         ]);
-        $path = $request->file('image')->store('sliders', 'custom');
+        $path = $request->file('image')->store('uploads/sliders', 'custom');
         Image::create([
             'path' => $path,
             'imageable_id' => $slider->id,

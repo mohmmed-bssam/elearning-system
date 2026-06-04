@@ -15,6 +15,17 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Styles -->
+    @if (app()->getLocale() == 'ar')
+        <style>
+            body {
+                font-family: 'Cairo', sans-serif;
+                direction: rtl;
+                text-align: right;
+            }
+        </style>
+    @endif
+    @stack('css')
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -34,5 +45,6 @@
                 {{ $slot }}
             </main>
         </div>
+        @stack('js')
     </body>
 </html>
