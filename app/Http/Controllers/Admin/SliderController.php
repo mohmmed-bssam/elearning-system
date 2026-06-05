@@ -123,6 +123,7 @@ class SliderController extends Controller
     public function destroy(Slider $slider)
     {
         File::delete(public_path($slider->image->path));
+        $slider->image()->delete();
         $slider->delete();
         flash()->warning('Slider deleted successfully');
 

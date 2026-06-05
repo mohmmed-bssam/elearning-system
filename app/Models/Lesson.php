@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Trans;
 use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
+    use Trans;
     //
     protected $guarded = [];
     public function course()
@@ -16,7 +18,7 @@ class Lesson extends Model
     {
         return [
             'title' => 'array',
-            'content' => 'array',
+            'description' => 'array',
         ];
     }
 
