@@ -3,13 +3,23 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Message;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function subscriptions()
     {
-        // Logic to retrieve and display subscriptions
+        $subscriptions = Subscription::latest()->paginate(env('PAGE_SIZE'));
+        return view('admin.subscriptions', compact('subscriptions'));
+    }
+    public function delete_subscriptions($id)
+    {
+        $subscription = Subscription::findOrFail($id);
+        $subscription->delete();
+        flash()->warning('Subscription deleted successfully.');
+        return redirect()->route('admin.subscriptions');
     }
 
     public function settings()
@@ -31,10 +41,14 @@ class DashboardController extends Controller
     }
     public function messages()
     {
-        // Logic to retrieve and display messages
+        $messages = Message::latest()->paginate(env('PAGE_SIZE'));
+        return view('admin.messages', compact('messages'));
     }
     public function delete_messages($id)
     {
-        // Logic to delete a specific message by ID
+        $message = Message::findOrFail($id);
+        $message->delete();
+        flash()->warning('Message deleted successfully.');
+        return redirect()->route('admin.messages');
     }
 }

@@ -113,9 +113,19 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <x-dropdown-link :href="route('admin.messages')">
+                            {{ __('admin.messages') }}
+                        </x-dropdown-link>
+                        {{-- <x-dropdown-link :href="route('dashboard.notifications')">
+                            {{ __('admin.notifications') }}
+                        </x-dropdown-link> --}}
+                        {{-- <x-dropdown-link :href="route('dashboard.settings')">
+                            {{ __('admin.settings') }}
+                        </x-dropdown-link> --}}
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
+
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">

@@ -44,6 +44,8 @@ Route::prefix(LaravelLocalization::setLocale())->group(
                 Route::delete('delete_messages/{id}', [DashboardController::class, 'delete_messages'])->name('delete_messages');
                 Route::resource('course_reviews', CourseReviewController::class);
                 Route::get('subscriptions', [DashboardController::class, 'subscriptions'])->name('subscriptions');
+                Route::delete('delete_subscriptions/{id}', [DashboardController::class, 'delete_subscriptions'])->name('delete_subscriptions');
+
                 Route::get('settings', [DashboardController::class, 'settings'])->name('settings');
                 Route::put('settings', [DashboardController::class, 'settings_update'])->name('settings.update');
             });
