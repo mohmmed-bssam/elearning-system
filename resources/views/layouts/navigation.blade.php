@@ -119,9 +119,9 @@
                         {{-- <x-dropdown-link :href="route('dashboard.notifications')">
                             {{ __('admin.notifications') }}
                         </x-dropdown-link> --}}
-                        {{-- <x-dropdown-link :href="route('dashboard.settings')">
+                        <x-dropdown-link :href="route('admin.settings')">
                             {{ __('admin.settings') }}
-                        </x-dropdown-link> --}}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>

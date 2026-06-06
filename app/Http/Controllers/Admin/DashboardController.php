@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use App\Models\Setting;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 
@@ -24,20 +25,29 @@ class DashboardController extends Controller
 
     public function settings()
     {
-        // Logic to retrieve current settings
+        return view('admin.settings');
     }
 
-    public function settings_update(Request $request)
+    public function settings_update(Request $request,Setting $setting)
     {
-        // Logic to validate and update settings
-        // For example:
-        // $request->validate([
-        //     'site_name' => 'required|string|max:255',
-        //     'contact_email' => 'required|email',
-        // ]);
+        $data = $request->except(['_token', '_method', 'site_logo']);
+        if ($request->hasFile('site_logo')) {
+            $data['site_logo'] =  $request->file('site_logo')
+                ->store('uploads/settings', 'custom');
+        }
+        if ($request->hasFile('about_logo')) {
+            $data['about_logo'] =  $request->file('about_logo')
+                ->store('uploads/settings', 'custom');
+        }
+        foreach ($data as $key => $value) {
+            Setting::updateOrCreate(
+                ['key' => $key],
+                ['value' => $value]
+            );
+        }
+        flash()->success('Settings updated successfully');
 
-        // Update settings in the database or configuration
-
+        return redirect()->back();
     }
     public function messages()
     {
