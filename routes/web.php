@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CourseReviewController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnrollmentController;
 use App\Http\Controllers\Admin\LessonController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\TeacherController;
@@ -43,6 +44,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(
                 Route::get('messages', [DashboardController::class, 'messages'])->name('messages');
                 Route::delete('delete_messages/{id}', [DashboardController::class, 'delete_messages'])->name('delete_messages');
                 Route::resource('course_reviews', CourseReviewController::class);
+                Route::resource('payments', PaymentController::class);
                 Route::get('subscriptions', [DashboardController::class, 'subscriptions'])->name('subscriptions');
                 Route::delete('delete_subscriptions/{id}', [DashboardController::class, 'delete_subscriptions'])->name('delete_subscriptions');
 

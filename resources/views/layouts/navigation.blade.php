@@ -47,6 +47,9 @@
                     <x-nav-link :href="route('admin.subscriptions')" :active="request()->routeIs('admin.subscriptions')">
                         {{ __('admin.subscriptions') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.payments.index')" :active="request()->routeIs('admin.payments.index')">
+                        {{ __('admin.payments') }}
+                    </x-nav-link>
 
                 </div>
             </div>

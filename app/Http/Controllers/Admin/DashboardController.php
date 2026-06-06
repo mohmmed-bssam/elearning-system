@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
@@ -61,4 +62,5 @@ class DashboardController extends Controller
         flash()->warning('Message deleted successfully.');
         return redirect()->route('admin.messages');
     }
+  
 }
