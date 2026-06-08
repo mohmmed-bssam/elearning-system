@@ -111,10 +111,10 @@ class TestimonialController extends Controller
             File::delete(public_path($testimonial->image->path));
             $path = $request->file('image')->store('uploads/testimonials', 'custom');
 
-            Image::update([
+
+            $testimonial->image()->update([
                 'path' => $path,
-                'imageable_id' => $testimonial->id,
-                'imageable_type' => Testimonial::class,
+               
 
 
             ]);

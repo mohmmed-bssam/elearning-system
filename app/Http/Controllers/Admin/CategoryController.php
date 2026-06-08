@@ -95,10 +95,9 @@ class CategoryController extends Controller
             $path = $request->file('image')->store('uploads/categories', 'custom');
 
 
-            Image::update([
+            $category->image()->update([
                 'path' => $path,
-                'imageable_id' => $category->id,
-                'imageable_type' => Category::class,
+
             ]);
         }
         flash()->info('Category updated successfully');

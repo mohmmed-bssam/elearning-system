@@ -9,9 +9,9 @@ class Team extends Model
     //
     protected $guarded = [];
 
-    public function images()
+    public function image()
     {
-        return $this->morphMany(Image::class, 'imageable');
+        return $this->morphone(Image::class, 'imageable');
     }
     public function casts()
     {

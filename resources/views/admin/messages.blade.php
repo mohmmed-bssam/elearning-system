@@ -66,7 +66,7 @@
                                                 focusable>
                                                 <div class="p-6">
 
-                                                    {{ $message->content }}
+                                                    {{ $message->message }}
                                                 </div>
                                             </x-modal>
                                             <form action="{{ route('admin.delete_messages',$message->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">

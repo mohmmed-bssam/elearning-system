@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Gallery;
+use App\Models\Image;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
@@ -24,7 +26,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         $settings = Setting::all()->pluck('value', 'key')->toArray();
-
+        $galleries = Gallery::latest()->take(6)->get();
         View::share('settings', $settings);
+        View::share('galleries', $galleries);
     }
 }

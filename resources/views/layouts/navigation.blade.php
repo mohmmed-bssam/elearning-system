@@ -35,6 +35,9 @@
                         {{ __('admin.lessons') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('admin.teams.index')" :active="request()->routeIs('admin.teams.index')">
+                        {{ __('admin.teams') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('admin.enrollments.index')" :active="request()->routeIs('admin.enrollments.index')">
                         {{ __('admin.enrollments') }}
                     </x-nav-link>

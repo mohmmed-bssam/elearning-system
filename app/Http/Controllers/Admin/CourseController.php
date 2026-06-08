@@ -134,10 +134,9 @@ class CourseController extends Controller
                 File::delete(public_path('uploads/' . $course->image->path));
              // Store new image
              $path = $request->file('image')->store('uploads/courses', 'custom');
-             Image::update([
+            $course->image()->update([
                  'path' => $path,
-                 'imageable_id' => $course->id,
-                 'imageable_type' => Course::class,
+
              ]);
          }
          flash()->info('Course updated successfully');
