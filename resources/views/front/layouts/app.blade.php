@@ -107,6 +107,32 @@
                 <a href="{{ route('front.testimonial') }}" class="nav-item nav-link">Testimonial</a>
 
                 <a href="{{ route('front.contact') }}" class="nav-item nav-link">Contact</a>
+                @guest
+                    <a href="{{ route('login') }}"
+                        class="nav-item nav-link {{ Request()->routeIs('login') ? 'active' : '' }}">Login</a>
+                    <a href="{{ route('register') }}"
+                        class="nav-item nav-link {{ Request()->routeIs('register') ? 'active' : '' }}">Register</a>
+
+                @endguest
+                @auth
+                    <a href="{{ route('dashboard') }}"
+                        class="nav-item nav-link {{ Request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="nav-item nav-link {{ Request()->routeIs('logout') ? 'active' : '' }}">Logout</a>
+
+                @endauth
+
+                @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                    @if ($localeCode != app()->getLocale())
+                        <a href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+                            class="nav-item nav-link">{{ $properties['native'] }}</a>
+                    @endif
+                @endforeach
+
             </div>
             <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i
                     class="fa fa-arrow-right ms-3"></i></a>
@@ -159,9 +185,10 @@
                     <h4 class="text-white mb-3">Gallery</h4>
                     <div class="row g-2 pt-2">
                         @foreach ($galleries as $gallery)
-                        <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="{{ asset($gallery->image) }}" alt="Gallery Image">
-                        </div>
+                            <div class="col-4">
+                                <img class="img-fluid bg-light p-1" src="{{ asset($gallery->image) }}"
+                                    alt="Gallery Image">
+                            </div>
                         @endforeach
 
                     </div>
@@ -170,14 +197,14 @@
                     <h4 class="text-white mb-3">Newsletter</h4>
                     <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
                     <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <form action="{{ route('front.subscription') }}" method="post" >
+                        <form action="{{ route('front.subscription') }}" method="post">
                             @csrf
 
-                        <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text"
-                            placeholder="Your email" name="email">
-                        <button type="submit"
-                            class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                            </form>
+                            <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text"
+                                placeholder="Your email" name="email">
+                            <button type="submit"
+                                class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                        </form>
                     </div>
                 </div>
             </div>

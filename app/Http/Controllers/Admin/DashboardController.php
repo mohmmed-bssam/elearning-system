@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\File;
 
 class DashboardController extends Controller
 {
+
+    public function dashboard()
+    {
+
+    return view('admin.dashboard');
+    }
     public function subscriptions()
     {
         $subscriptions = Subscription::latest()->paginate(env('PAGE_SIZE'));

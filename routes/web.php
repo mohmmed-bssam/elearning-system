@@ -43,9 +43,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(
 
 
         Route::middleware(['auth', 'verified', 'admin'])->group(function () {
-            Route::get('/dashboard', function () {
-                return view('dashboard');
-            })->name('dashboard');
+            Route::get('/dashboard',[DashboardController::class, 'dashboard'])->name('dashboard');
             Route::prefix('admin')->name('admin.')->group(function () {
                 Route::resource('sliders', SliderController::class);
                 Route::resource('categories', CategoryController::class);
