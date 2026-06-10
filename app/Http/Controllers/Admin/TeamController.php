@@ -12,7 +12,7 @@ class TeamController extends Controller
 {
     public function index()
     {
-        $teams = Team::latest()->paginate(env('PAGE_SIZE'));
+        $teams = Team::with('image')->latest()->paginate(env('PAGE_SIZE'));
 
         return view('admin.teams.index', compact('teams'));
     }

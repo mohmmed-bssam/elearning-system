@@ -14,11 +14,21 @@ class CheckType
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
-        if(Auth::user()->role != 'admin'){
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        if (Auth::user()->role != $role) {
             return redirect('/');
         }
+
         return $next($request);
     }
+    //     if(Auth::user()->role != 'admin'){
+    //         return redirect('/');
+    //     }
+    //     return $next($request);
+    // }
 }

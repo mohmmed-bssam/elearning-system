@@ -15,8 +15,7 @@
                 <div class="p-6 text-gray-900">
 
 
-                    <div
-                        class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+                    <div class="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-base border border-default">
                         <table class="w-full text-sm text-left rtl:text-right text-body">
                             <thead
                                 class="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default bg-gray-100">

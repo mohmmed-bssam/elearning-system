@@ -100,13 +100,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="{{ route('front.index') }}" class="nav-item nav-link active">Home</a>
-                <a href="{{ route('front.about') }}" class="nav-item nav-link">About</a>
-                <a href="{{ route('front.course') }}" class="nav-item nav-link">Courses</a>
-                <a href="{{ route('front.team') }}" class="nav-item nav-link">Our Team</a>
-                <a href="{{ route('front.testimonial') }}" class="nav-item nav-link">Testimonial</a>
+                <a href="{{ route('front.index') }}" class="nav-item nav-link {{ Request()->routeIs('front.index') ? 'active' : '' }}">Home</a>
+                <a href="{{ route('front.about') }}" class="nav-item nav-link {{ Request()->routeIs('front.about') ? 'active' : '' }}">About</a>
+                <a href="{{ route('front.course') }}" class="nav-item nav-link {{ Request()->routeIs('front.course') ? 'active' : '' }}">Courses</a>
+                <a href="{{ route('front.team') }}" class="nav-item nav-link {{ Request()->routeIs('front.team') ? 'active' : '' }}">Our Team</a>
+                <a href="{{ route('front.testimonial') }}" class="nav-item nav-link {{ Request()->routeIs('front.testimonial') ? 'active' : '' }}">Testimonial</a>
 
-                <a href="{{ route('front.contact') }}" class="nav-item nav-link">Contact</a>
+                <a href="{{ route('front.contact') }}" class="nav-item nav-link {{ Request()->routeIs('front.contact') ? 'active' : '' }}">Contact</a>
                 @guest
                     <a href="{{ route('login') }}"
                         class="nav-item nav-link {{ Request()->routeIs('login') ? 'active' : '' }}">Login</a>
@@ -115,8 +115,16 @@
 
                 @endguest
                 @auth
-                    <a href="{{ route('dashboard') }}"
-                        class="nav-item nav-link {{ Request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+                    @if (Auth::user()->role == 'admin')
+                        <a href="{{ route('admin.dashboard') }}"
+                            class="nav-item nav-link {{ Request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a>
+                    @elseif (Auth::user()->role == 'teacher')
+                        <a href="{{ route('teacher.dashboard') }}"
+                            class="nav-item nav-link {{ Request()->routeIs('teacher.dashboard') ? 'active' : '' }}">Dashboard</a>
+                    @else
+                        <a href="{{ route('admin.student') }}"
+                            class="nav-item nav-link {{ Request()->routeIs('student.dashboard') ? 'active' : '' }}">Dashboard</a>
+                    @endif
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>

@@ -23,7 +23,7 @@ class MainController extends Controller
     {
         $sliders = Slider::with('image')->latest()->take(5)->get();
         $categories = Category::with('image')->latest()->take(3)->get();
-        $courses = Course::with(['image', 'category'])
+        $courses = Course::with(['image', 'category','teacher'])
             ->where('status', 'active')
             ->latest()->take(3)
             ->get();
@@ -52,7 +52,7 @@ class MainController extends Controller
     }
 
 public function course(){
-        $courses = Course::with('image','category')->latest()->take(3)->get();
+        $courses = Course::with('image','category','teacher')->latest()->take(3)->get();
 
         return view('front.course',compact('courses'));
     }
