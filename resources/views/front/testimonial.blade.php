@@ -1,6 +1,6 @@
 @extends('front.layouts.app')
 @section('title')
-__('front.testimonials')
+{{ __('front.testimonials') }}
 @endsection
 @section('content')
     <!-- Header Start -->

@@ -1,6 +1,6 @@
 @extends('front.layouts.app')
 @section('title')
-__('front.contact')
+{{ __('front.contact') }}
 @endsection
 @section('content')
 

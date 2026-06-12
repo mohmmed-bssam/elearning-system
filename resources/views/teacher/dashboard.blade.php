@@ -13,7 +13,7 @@ Teacher Dashboard
     </h1>
 
     <!-- Stats -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
 
         <div class="bg-white p-6 rounded-2xl shadow">
             <h2 class="text-gray-500">Courses</h2>
@@ -29,6 +29,12 @@ Teacher Dashboard
             </p>
         </div>
 
+        <div class="bg-white p-6 rounded-2xl shadow">
+            <h2 class="text-gray-500">Students</h2>
+            <p class="text-3xl font-bold text-yellow-500">
+                {{ $studentsCount ?? 0 }}
+            </p>
+        </div>
         <div class="bg-white p-6 rounded-2xl shadow">
             <h2 class="text-gray-500">Ratings</h2>
             <p class="text-3xl font-bold text-yellow-500">
@@ -50,9 +56,9 @@ Teacher Dashboard
                 📚 Manage Lessons
             </a>
 
-            <a href="{{ route('teacher.courses') }}"
+            <a href="{{ route('teacher.students') }}"
                class="bg-gray-800 text-white px-5 py-2 rounded-xl hover:bg-gray-700">
-                🎓 Manage Courses
+                🎓 View Students
             </a>
 
         </div>

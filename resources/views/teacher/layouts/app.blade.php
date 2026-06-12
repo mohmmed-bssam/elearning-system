@@ -32,13 +32,13 @@
                 <a href="{{ route('teacher.dashboard') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
                     🏠 <span x-show="open">Dashboard</span>
                 </a>
-                <a href="{{ route('teacher.courses') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
-                    📚 <span x-show="open">Courses</span>
+                <a href="{{ route('teacher.students') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
+                    📚 <span x-show="open">Student</span>
                 </a>
 
                 <a href="{{ route('teacher.lessons.index') }}"
                     class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
-                    📖 <span x-show="open">Lessons</span>
+                    📖 <span x-show="open">Courses&Lessons</span>
                 </a>
 
                 <a href="" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">

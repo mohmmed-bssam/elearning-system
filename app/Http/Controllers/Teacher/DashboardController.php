@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Enrollment;
 use App\Models\Lesson;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,6 +48,13 @@ class DashboardController extends Controller
             ->paginate(env('PAGE_SIZE'));
 
         return view('teacher.courses', compact('courses'));
+    }
+    public function students(){
+        $teacher = Auth::user();
+        $students = User::whereHas('enrollments.course', function ($query) use ($teacher) {
+            $query->where('teacher_id', $teacher->id);
+        })->distinct()->get();
+        return view('teacher.students', compact('students'));
     }
 
     /**

@@ -78,6 +78,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::prefix('teacher')->name('teacher.')->group(function () {
             Route::get('/dashboard', [TeacherDashboardController::class, 'index'])->name('dashboard');
             Route::get('/courses', [TeacherDashboardController::class, 'courses'])->name('courses');
+            Route::get('/students', [TeacherDashboardController::class, 'students'])->name('students');
             Route::resource('/lessons', TeacherLessonController::class);
 
         });

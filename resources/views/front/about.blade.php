@@ -1,6 +1,6 @@
 @extends('front.layouts.app')
 @section('title')
-    {{ __('front.home_page') }}
+    {{ __('front.about') }}
 @endsection
 @section('content')
 
