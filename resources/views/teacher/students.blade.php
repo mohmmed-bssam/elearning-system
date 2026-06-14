@@ -42,11 +42,14 @@
                         </td>
 
                         <td class="p-3">
+
                             @foreach ($student->enrollments as $enrollment)
-                                {{ $enrollment->course->getTransAttribute('title') }}<br>
+
+                             - {{ $enrollment->course->getTransAttribute('title') }}<br>
+
                             @endforeach
                         </td>
-                       
+
 
 
                     </tr>

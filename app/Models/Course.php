@@ -19,10 +19,21 @@ class Course extends Model
     {
         return $this->belongsTo(User::class);
     }
+   
+    public function students()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'enrollments'
+        )->withPivot('status', 'enrolled_at')
+            ->withTimestamps();
+    }
+
     public function lessons()
     {
-        return $this->hasMany(Lesson::class)->orderBy('lesson_order');
+        return $this->hasMany(Lesson::class);
     }
+
     public function enrollments()
     {
         return $this->hasMany(Enrollment::class)->orderBy('lesson_order');

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\CourseReviewController as StudentCourseReviewController;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\Teacher\LessonController as TeacherLessonController;
@@ -80,13 +81,22 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/courses', [TeacherDashboardController::class, 'courses'])->name('courses');
             Route::get('/students', [TeacherDashboardController::class, 'students'])->name('students');
             Route::resource('/lessons', TeacherLessonController::class);
-
+            Route::get('reviews',[TeacherDashboardController::class, 'reviews'])->name('reviews');
         });
     });
     Route::middleware(['auth', 'role:student'])->group(function () {
 
         Route::prefix('student')->name('student.')->group(function () {
             Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
+            Route::get('/reviews', [StudentCourseReviewController::class, 'index'])
+                ->name('reviews.index');
+
+            Route::get('/reviews/create/{course}', [StudentCourseReviewController::class, 'create'])
+                ->name('reviews.create');
+
+            Route::post('/reviews', [StudentCourseReviewController::class, 'store'])
+                ->name('reviews.store');
+            Route::get('/lessons', [StudentDashboardController::class, 'lessons'])->name('lessons');
         });
     });
 });

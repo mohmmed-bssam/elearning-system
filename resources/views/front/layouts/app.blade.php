@@ -122,7 +122,7 @@
                         <a href="{{ route('teacher.dashboard') }}"
                             class="nav-item nav-link {{ Request()->routeIs('teacher.dashboard') ? 'active' : '' }}">Dashboard</a>
                     @else
-                        <a href="{{ route('admin.student') }}"
+                        <a href="{{ route('student.dashboard') }}"
                             class="nav-item nav-link {{ Request()->routeIs('student.dashboard') ? 'active' : '' }}">Dashboard</a>
                     @endif
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
