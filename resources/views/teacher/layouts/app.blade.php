@@ -8,7 +8,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Alpine.js للـ sidebar toggle -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        .card {
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .form-control {
+            border-radius: 12px;
+        }
+
+        .btn-primary {
+            border-radius: 12px;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
@@ -26,9 +45,28 @@
                     ☰
                 </button>
             </div>
+            <div class="p-4 border-b border-gray-700">
+
+                <div
+                    class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto text-lg font-bold">
+                    @if (auth()->user()->image)
+                        <img src="{{ asset(auth()->user()->image) }}">
+                    @else
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    @endif
+                </div>
+
+                <p class="text-center mt-2 font-semibold" x-show="open">
+                    {{ auth()->user()->name }}
+                </p>
+
+            </div>
 
             <!-- Links -->
             <nav class="mt-4 space-y-2">
+
+
+
                 <a href="{{ route('teacher.dashboard') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
                     🏠 <span x-show="open">Dashboard</span>
                 </a>
@@ -43,6 +81,9 @@
 
                 <a href="{{ route('teacher.reviews') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
                     ⭐ <span x-show="open">Reviews</span>
+                </a>
+                <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
+                    ⭐ <span x-show="open">My Profile</span>
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

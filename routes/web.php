@@ -43,8 +43,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     );
 
 
-
-
     Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
@@ -71,9 +69,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('settings', [DashboardController::class, 'settings'])->name('settings');
             Route::put('settings', [DashboardController::class, 'settings_update'])->name('settings.update');
         });
-        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
     Route::middleware(['auth', 'role:teacher'])->group(function () {
         Route::prefix('teacher')->name('teacher.')->group(function () {
@@ -99,6 +94,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/lessons', [StudentDashboardController::class, 'lessons'])->name('lessons');
         });
     });
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
