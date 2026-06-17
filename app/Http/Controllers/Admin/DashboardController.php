@@ -10,6 +10,8 @@ use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class DashboardController extends Controller
@@ -31,6 +33,17 @@ class DashboardController extends Controller
         $subscription->delete();
         flash()->warning('Subscription deleted successfully.');
         return redirect()->route('admin.subscriptions');
+    }
+    public function notifications()
+    {
+        $notifications = Auth::user()->notifications;
+
+        return view('admin.notifications', compact('notifications'));
+    }
+    public function markAsRead(DatabaseNotification $notification)
+    {
+        $notification->update(['read_at' => now()]);
+        return redirect()->back();
     }
 
     public function settings()

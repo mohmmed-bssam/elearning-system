@@ -9,6 +9,7 @@ use App\Models\Enrollment;
 use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -77,6 +78,17 @@ class DashboardController extends Controller
         })->avg('rate');
 
         return view('teacher.reviews', compact('reviews','averageRate'));
+    }
+    public function notifications()
+    {
+        $notifications = Auth::user()->notifications;
+
+        return view('teacher.notifications', compact('notifications'));
+    }
+    public function markAsRead(DatabaseNotification $notification)
+    {
+        $notification->update(['read_at' => now()]);
+        return redirect()->back();
     }
 
 }

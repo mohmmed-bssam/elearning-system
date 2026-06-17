@@ -93,8 +93,6 @@
                                                     Failed
                                                 </span>
                                             @endif
-                                            <span
-                                                class="capitalize text-white {{ $payment->status }} bg px-1 py-0.5 rounded">{{ $payment->status }}</span>
                                         </td>
                                         <td class="px-6 py-4">
                                             {{ $payment->payment_gateway }}
@@ -105,19 +103,34 @@
                                             {{ $payment->created_at->format('d/m/Y') }}
                                         </td>
                                         <td class="px-6 py-4 flex space-x-2 text-center">
-                                              <form action="{{ route('admin.payments.edit', $payment->id) }}"
-                                                method="Get">
-                                                @csrf
-                                                <x-primary-button type="submit"><i
-                                                        class="fas fa-edit"></i></x-primary-button>
-                                            </form>
 
+                                            @if ($payment->status == 'pending')
+                                                {{-- Approve --}}
+                                                <form action="{{ route('admin.payments.approve', $payment->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <x-primary-button type="submit">
+                                                        Approve
+                                                    </x-primary-button>
+                                                </form>
+
+                                                {{-- Reject --}}
+                                                <form action="{{ route('admin.payments.reject', $payment->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <x-warning-button type="submit">
+                                                        Reject
+                                                    </x-warning-button>
+                                                </form>
+
+                                            @endif
                                             <form action="{{ route('admin.payments.destroy', $payment->id) }}"
                                                 method="POST" onsubmit="return confirm('Are you sure?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <x-danger-button type="submit"><i
-                                                        class="fas fa-trash"></i></x-danger-button>
+                                                <x-danger-button type="submit">Delete</x-danger-button>
                                             </form>
                                         </td>
 

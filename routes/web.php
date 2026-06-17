@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\PaymentController as ControllersPaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\CourseReviewController as StudentCourseReviewController;
 use App\Http\Controllers\Teacher\DashboardController as TeacherDashboardController;
@@ -66,8 +67,19 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('subscriptions', [DashboardController::class, 'subscriptions'])->name('subscriptions');
             Route::delete('delete_subscriptions/{id}', [DashboardController::class, 'delete_subscriptions'])->name('delete_subscriptions');
 
+            Route::get('notifications', [DashboardController::class, 'notifications'])->name('notifications');
+            Route::get('notifications/{notification}', [DashboardController::class, 'markAsRead'])->name('notifications.markAsRead');
+
             Route::get('settings', [DashboardController::class, 'settings'])->name('settings');
             Route::put('settings', [DashboardController::class, 'settings_update'])->name('settings.update');
+
+            // approve payment
+            Route::patch('/payments/{id}/approve', [PaymentController::class, 'approvePayment'])
+                ->name('payments.approve');
+
+            // reject payment
+            Route::patch('/payments/{id}/reject', [PaymentController::class, 'rejectPayment'])
+                ->name('payments.reject');
         });
     });
     Route::middleware(['auth', 'role:teacher'])->group(function () {
@@ -76,7 +88,9 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::get('/courses', [TeacherDashboardController::class, 'courses'])->name('courses');
             Route::get('/students', [TeacherDashboardController::class, 'students'])->name('students');
             Route::resource('/lessons', TeacherLessonController::class);
-            Route::get('reviews',[TeacherDashboardController::class, 'reviews'])->name('reviews');
+            Route::get('reviews', [TeacherDashboardController::class, 'reviews'])->name('reviews');
+            Route::get('notifications', [TeacherDashboardController::class, 'notifications'])->name('notifications');
+            Route::get('notifications/{notification}', [TeacherDashboardController::class, 'markAsRead'])->name('notifications.markAsRead');
         });
     });
     Route::middleware(['auth', 'role:student'])->group(function () {
@@ -92,11 +106,23 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::post('/reviews', [StudentCourseReviewController::class, 'store'])
                 ->name('reviews.store');
             Route::get('/lessons', [StudentDashboardController::class, 'lessons'])->name('lessons');
+            Route::get('notifications', [StudentDashboardController::class, 'notifications'])->name('notifications');
+            Route::get('notifications/{notification}', [StudentDashboardController::class, 'markAsRead'])->name('notifications.markAsRead');
         });
     });
+    Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+        Route::get('checkout/{course}', [ControllersPaymentController::class, 'checkout'])
+            ->name('checkout');
+
+        Route::post('checkout/{course}', [ControllersPaymentController::class, 'store'])
+            ->name('checkout.store');
+
+
+    });
 });
 
 

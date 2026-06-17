@@ -9,7 +9,7 @@
 
     <!-- Alpine.js للـ sidebar toggle -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         .card {
@@ -34,12 +34,13 @@
 
     <div x-data="{ open: true }" class="flex h-screen">
 
+
         <!-- Sidebar -->
         <div :class="open ? 'w-64' : 'w-20'" class="bg-gray-900 text-white transition-all duration-300">
 
             <!-- Logo -->
             <div class="p-4 text-xl font-bold border-b border-gray-700 flex justify-between items-center">
-                <a href="{{ route('front.index') }}"><span x-show="open">👨‍🏫 Teacher</span></a>
+                <a href="{{ route('front.index') }}"><span x-show="open"><i class="fa-solid fa-chalkboard-user me-2"></i> Teacher</span></a>
 
                 <button @click="open = !open" class="text-white text-sm">
                     ☰
@@ -68,29 +69,34 @@
 
 
                 <a href="{{ route('teacher.dashboard') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
-                    🏠 <span x-show="open">Dashboard</span>
+                    <i class="fa-solid fa-house"></i> <span x-show="open">Dashboard</span>
                 </a>
                 <a href="{{ route('teacher.students') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
-                    📚 <span x-show="open">Student</span>
+                    <i class="fa-solid fa-users"></i><span x-show="open">Student</span>
                 </a>
 
                 <a href="{{ route('teacher.lessons.index') }}"
                     class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
-                    📖 <span x-show="open">Courses&Lessons</span>
+                    <i class="fa-solid fa-book-open"></i> <span x-show="open">Courses&Lessons</span>
                 </a>
 
                 <a href="{{ route('teacher.reviews') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
-                    ⭐ <span x-show="open">Reviews</span>
+                     <i class="fa-solid fa-star"></i> <span x-show="open">Reviews</span>
                 </a>
                 <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700">
-                    ⭐ <span x-show="open">My Profile</span>
+                    <i class="fa-solid fa-user"></i> <span x-show="open">My Profile</span>
+                </a>
+                <a href="{{ route('teacher.notifications') }}"
+                    class="flex items-center gap-3 px-4 py-2 rounded-lg
+   {{ request()->routeIs('teacher.notifications') ? 'bg-blue-600' : 'hover:bg-gray-700' }}">
+                    <i class="fa-solid fa-bell"></i> <span x-show="open"> Notifications</span> ({{ Auth::user()->unreadNotifications->count() }})
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
 
                     <button type="submit" class="flex items-center gap-3 px-4 py-2 hover:bg-gray-700 w-full text-left">
 
-                        🚪 <span x-show="open">{{ __('Log Out') }}</span>
+                        <i class="fa-solid fa-right-from-bracket"></i> <span x-show="open">{{ __('Log Out') }}</span>
                     </button>
                 </form>
 

@@ -22,8 +22,7 @@
                                     <a href="{{ route('front.slider_show', $slider->id) }}"
                                         class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read
                                         More</a>
-                                    <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Join
-                                        Now</a>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -149,19 +148,23 @@
                                     <a href="{{ route('front.course_show', $course->id) }}"
                                         class="flex-shrink-0 btn btn-sm btn-primary px-3 border-end"
                                         style="border-radius: 30px 0 0 30px;">Read More</a>
-                                    <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3"
+                                    <a href="{{ route('checkout', $course) }}"
+                                        class="flex-shrink-0 btn btn-sm btn-primary px-3"
                                         style="border-radius: 0 30px 30px 0;">Join Now</a>
                                 </div>
                             </div>
                             <div class="text-center p-4 pb-0">
                                 <h3 class="mb-0">${{ $course->price }}</h3>
                                 <div class="mb-3">
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small class="fa fa-star text-primary"></small>
-                                    <small>(123)</small>
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= round($course->reviews_avg_rate ?? 0))
+                                            <i class="fa fa-star text-warning"></i>
+                                        @else
+                                            <i class="fa fa-star text-secondary"></i>
+                                        @endif
+                                    @endfor
+
+                                    <span>({{ $course->reviews_count }})</span>
                                 </div>
                                 <h5 class="mb-4">{{ $course->getTransAttribute('title') }}</h5>
                             </div>
@@ -232,8 +235,8 @@
             <div class="owl-carousel testimonial-carousel position-relative">
                 @foreach ($testimonials as $testimonial)
                     <div class="testimonial-item text-center">
-                        <img class="border rounded-circle p-2 mx-auto mb-3"
-                            src="{{ asset($testimonial->image->path) }}" style="width: 80px; height: 80px;">
+                        <img class="border rounded-circle p-2 mx-auto mb-3" src="{{ asset($testimonial->image->path) }}"
+                            style="width: 80px; height: 80px;">
                         <h5 class="mb-0">{{ $testimonial->name }}</h5>
                         <p>{{ $testimonial->getTransAttribute('title') }}</p>
                         <div class="testimonial-text bg-light text-center p-4">

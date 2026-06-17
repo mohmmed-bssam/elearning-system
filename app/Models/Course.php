@@ -19,7 +19,7 @@ class Course extends Model
     {
         return $this->belongsTo(User::class);
     }
-   
+
     public function students()
     {
         return $this->belongsToMany(
@@ -42,6 +42,7 @@ class Course extends Model
     {
         return $this->hasMany(CourseReview::class);
     }
+ 
     public function payments()
     {
         return $this->hasMany(Payment::class);

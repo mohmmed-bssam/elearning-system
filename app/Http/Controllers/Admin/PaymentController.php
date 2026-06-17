@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Enrollment;
 use App\Models\Payment;
+use App\Models\User;
+use App\Notifications\PaymentApprovedNotification;
+use App\Notifications\StudentEnrolledNotification;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $payments = Payment::with(['student', 'course'])
@@ -18,34 +20,71 @@ class PaymentController extends Controller
             ->paginate(env('PAGE_SIZE'));
         return view('admin.payments.index', compact('payments'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function approvePayment($id)
     {
-        //
+        $payment = Payment::findOrFail($id);
+
+        if ($payment->status == 'paid') {
+            flash()->error('Payment already approved.');
+            return back();
+        }
+
+        // 1. تغيير الحالة
+        $payment->update([
+            'status' => 'paid'
+        ]);
+
+        // 2. إنشاء Enrollment إذا مش موجود
+        $exists = Enrollment::where('user_id', $payment->user_id)
+            ->where('course_id', $payment->course_id)
+            ->exists();
+
+        if (!$exists) {
+            Enrollment::create([
+                'user_id' => $payment->user_id,
+                'course_id' => $payment->course_id,
+                'status'=>'active',
+                'enrolled_at'=>now(),
+            ]);
+            $course = $payment->course;
+
+            $student = User::where('id', $payment->user_id )->first();
+
+            $student->notify(new PaymentApprovedNotification($course));
+            flash()->success(
+                'request approval successfully.'
+            );
+            // للطالب
+
+
+            // للمعلم
+             $course->teacher->notify(new StudentEnrolledNotification($student, $course));
+        }
+
+        flash()->success('Payment approved and student enrolled successfully.');
+
+        return back();
+    }
+    public function rejectPayment($id)
+    {
+        $payment = Payment::findOrFail($id);
+
+        if ($payment->status != 'pending') {
+            flash()->error('This payment is already processed.');
+            return back();
+        }
+
+        $payment->update([
+            'status' => 'Failed'
+        ]);
+
+        flash()->warning('Payment rejected successfully.');
+
+        return back();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Payment $payment)
     {
         return view('admin.payments.edit', compact('payment'));
@@ -63,9 +102,7 @@ class PaymentController extends Controller
         return redirect()->route('admin.payments.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Payment $payment)
     {
         $payment->delete();

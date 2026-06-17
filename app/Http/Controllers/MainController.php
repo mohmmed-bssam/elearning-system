@@ -23,9 +23,12 @@ class MainController extends Controller
     {
         $sliders = Slider::with('image')->latest()->take(5)->get();
         $categories = Category::with('image')->latest()->take(3)->get();
-        $courses = Course::with(['image', 'category','teacher'])
+        $courses = Course::with(['image', 'category', 'teacher', 'reviews'])
+            ->withAvg('reviews', 'rate')
+            ->withCount('reviews')
             ->where('status', 'active')
-            ->latest()->take(3)
+            ->latest()
+            ->take(3)
             ->get();
         $services = Service::latest()->take(4)->get();
         $testimonials = Testimonial::with('image')->latest()->take(12)->get();
@@ -41,35 +44,46 @@ class MainController extends Controller
         ];
         return view('front.index', $data);
     }
-    public function slider_show(Slider $slider){
-        return view('front.showSlider',compact('slider'));
+    public function slider_show(Slider $slider)
+    {
+        return view('front.showSlider', compact('slider'));
     }
-    public function Course_show(Course $course){
-        return view('front.showCourse',compact('course'));
+    public function Course_show(Course $course)
+
+    {
+        $course->loadCount('reviews')
+            ->loadAvg('reviews', 'rate');
+
+        return view('front.showCourse', compact('course'));
     }
-    public function about(){
+    public function about()
+    {
         return view('front.about');
     }
 
-public function course(){
-        $courses = Course::with('image','category','teacher')->latest()->take(3)->get();
+    public function course()
+    {
+        $courses = Course::with('image', 'category', 'teacher')->latest()->take(3)->get();
 
-        return view('front.course',compact('courses'));
+        return view('front.course', compact('courses'));
     }
 
-public function team(){
+    public function team()
+    {
         $teams = Team::with('image')->latest()->take(6)->get();
 
-        return view('front.team',compact('teams'));
+        return view('front.team', compact('teams'));
     }
 
-public function testimonial(){
+    public function testimonial()
+    {
         $testimonials = Testimonial::with('image')->latest()->take(3)->get();
 
-        return view('front.testimonial',compact('testimonials'));
+        return view('front.testimonial', compact('testimonials'));
     }
 
-public function contact(){
+    public function contact()
+    {
         return view('front.contact');
     }
 
@@ -89,7 +103,8 @@ public function contact(){
         return redirect()->back();
     }
 
-public function subscription(Request $request){
+    public function subscription(Request $request)
+    {
         $request->validate([
             'email' => 'required|email',
         ]);
@@ -98,53 +113,7 @@ public function subscription(Request $request){
         ]);
 
         return redirect()->back();
-}
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
 
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

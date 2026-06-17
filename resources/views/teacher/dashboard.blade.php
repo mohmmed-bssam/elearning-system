@@ -11,6 +11,7 @@ Teacher Dashboard
     <h1 class="text-3xl font-bold text-gray-800 mb-6">
         👨‍🏫 Teacher Dashboard
     </h1>
+  
 
     <!-- Stats -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">

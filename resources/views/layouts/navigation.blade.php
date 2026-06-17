@@ -122,9 +122,9 @@
                         <x-dropdown-link :href="route('admin.messages')">
                             {{ __('admin.messages') }}
                         </x-dropdown-link>
-                        {{-- <x-dropdown-link :href="route('dashboard.notifications')">
-                            {{ __('admin.notifications') }}
-                        </x-dropdown-link> --}}
+                        <x-dropdown-link :href="route('admin.notifications')">
+                            {{ __('admin.notifications') }} ({{ Auth::user()->unreadNotifications->count() }})
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('admin.settings')">
                             {{ __('admin.settings') }}
                         </x-dropdown-link>

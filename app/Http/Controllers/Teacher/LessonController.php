@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Notifications\NewLessonNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,7 +57,7 @@ class LessonController extends Controller
             ->where('teacher_id', $teacher->id)
             ->firstOrFail();
 
-        Lesson::create([
+       $lesson= Lesson::create([
             'course_id' => $course->id,
             'title' => [
                 'en' => $request->title_en,
@@ -69,6 +70,11 @@ class LessonController extends Controller
             'video_url' => $request->video_url,
             'lesson_order' => $request->lesson_order,
         ]);
+        $students = $course->students;
+
+        foreach ($students as $student) {
+            $student->notify(new NewLessonNotification($course, $lesson));
+        }
 
         flash()->success('Lesson created successfully.');
 

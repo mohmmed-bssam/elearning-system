@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\CourseReview;
 use App\Models\Enrollment;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     /**
-     * Dashboard الصفحة الرئيسية
      */
     public function index()
     {
@@ -51,5 +51,16 @@ class DashboardController extends Controller
             ->get();
 
         return view('student.lessons', compact('courses'));
+    }
+    public function notifications()
+    {
+        $notifications = Auth::user()->notifications;
+
+        return view('student.notifications', compact('notifications'));
+    }
+    public function markAsRead(DatabaseNotification $notification)
+    {
+        $notification->update(['read_at' => now()]);
+        return redirect()->back();
     }
 }
