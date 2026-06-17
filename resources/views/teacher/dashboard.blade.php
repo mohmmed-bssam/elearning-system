@@ -9,9 +9,9 @@ Teacher Dashboard
 <div class="p-6">
 
     <h1 class="text-3xl font-bold text-gray-800 mb-6">
-        👨‍🏫 Teacher Dashboard
+        <i class="fa-solid fa-chalkboard-user me-2"></i> Teacher Dashboard
     </h1>
-  
+
 
     <!-- Stats -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">

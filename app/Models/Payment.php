@@ -10,7 +10,7 @@ class Payment extends Model
     protected $guarded = [];
     public function student()
     {
-        return $this->belongsTo(User::class)->withDefault();
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function course()
     {
