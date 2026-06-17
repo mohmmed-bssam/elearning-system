@@ -41,7 +41,7 @@
                                     <a href="{{ route('front.course_show', $course->id) }}"
                                         class="flex-shrink-0 btn btn-sm btn-primary px-3 border-end"
                                         style="border-radius: 30px 0 0 30px;">Read More</a>
-                                    <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3"
+                                    <a href="{{ route('checkout', $course) }}" class="flex-shrink-0 btn btn-sm btn-primary px-3"
                                         style="border-radius: 0 30px 30px 0;">Join Now</a>
                                 </div>
                             </div>

@@ -142,9 +142,10 @@
                 @endforeach
 
             </div>
-            <a href="" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i
+            <a href="{{ route('front.course') }}" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">Join Now<i
                     class="fa fa-arrow-right ms-3"></i></a>
-        </div>
+
+    </div>
     </nav>
     <!-- Navbar End -->
 
