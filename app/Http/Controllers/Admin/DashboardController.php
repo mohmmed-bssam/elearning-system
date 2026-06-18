@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\Gallery;
 use App\Models\Image;
+use App\Models\Lesson;
 use App\Models\Message;
 use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\Subscription;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +23,27 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
+        return view('admin.dashboard', [
+            'teachers' => User::where('role', 'teacher')->count(),
+            'students' => User::where('role', 'student')->count(),
+            'courses' => Course::count(),
+            'lessons' => Lesson::count(),
+            'enrollments' => Enrollment::count(),
+            'payments' => Payment::sum('amount'),
+            'latestStudents' => User::where('role', 'student')
+                ->latest()
+                ->take(5)
+                ->get(),
+            'latestEnrollments' => Enrollment::with(['user', 'course'])
+                ->latest()
+                ->take(5)
+                ->get(),
 
-    return view('admin.dashboard');
+            'latestPayments' => Payment::with('student')
+                ->latest()
+                ->take(5)
+                ->get(),
+        ]);
     }
     public function subscriptions()
     {

@@ -28,7 +28,7 @@
 
                     <span>({{ $course->reviews_count }})</span>
                 </div>
-                <h4>Price: ${{ $course->price }}</h4>
+                <h4>Price: ${{ number_format($course->price) }}</h4>
                 <h4>Teacher: {{ $course->teacher->name }}</h4>
 
                 <div>

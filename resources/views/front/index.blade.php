@@ -22,7 +22,7 @@
                                     <a href="{{ route('front.slider_show', $slider->id) }}"
                                         class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read
                                         More</a>
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -154,7 +154,7 @@
                                 </div>
                             </div>
                             <div class="text-center p-4 pb-0">
-                                <h3 class="mb-0">${{ $course->price }}</h3>
+                                <h3 class="mb-0">${{ number_format($course->price) }}</h3>
                                 <div class="mb-3">
                                     @for ($i = 1; $i <= 5; $i++)
                                         @if ($i <= round($course->reviews_avg_rate ?? 0))
