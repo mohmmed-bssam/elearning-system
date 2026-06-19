@@ -232,4 +232,25 @@
             </div>
         </div>
     </div>
+    @push('js')
+        <script>
+            const del_btns = document.querySelectorAll('.del_image');
+            del_btns.forEach(el => {
+                el.onclick = (e) => {
+                    e.preventDefault();
+                        let url = el.href;
+                        fetch(url)
+                            .then(res => res.json())
+                            .then(data => {
+                                    if (data.status) {
+                                        el.parentElement.remove();
+                                    }
+                                })
+                           .catch(err => {
+                        console.log(err);
+                    });
+            }
+            });
+        </script>
+    @endpush
 </x-app-layout>

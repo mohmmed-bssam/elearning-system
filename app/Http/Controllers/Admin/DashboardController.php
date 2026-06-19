@@ -118,8 +118,10 @@ class DashboardController extends Controller
     {
         File::delete(public_path($gallery->image));
         $gallery->delete();
-        return redirect()->back();
-    }
+        return response()->json([
+            'status' => true
+        ]);
+            }
     public function messages()
     {
         $messages = Message::latest()->paginate(env('PAGE_SIZE'));
