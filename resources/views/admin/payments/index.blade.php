@@ -104,8 +104,8 @@
                                         </td>
                                         <td class="px-6 py-4 flex space-x-2 text-center">
 
-                                            @if ($payment->status == 'pending')
-                                                {{-- Approve --}}
+                                            {{-- @if ($payment->status == 'pending')
+
                                                 <form action="{{ route('admin.payments.approve', $payment->id) }}"
                                                     method="POST">
                                                     @csrf
@@ -115,7 +115,6 @@
                                                     </x-primary-button>
                                                 </form>
 
-                                                {{-- Reject --}}
                                                 <form action="{{ route('admin.payments.reject', $payment->id) }}"
                                                     method="POST">
                                                     @csrf
@@ -125,7 +124,7 @@
                                                     </x-warning-button>
                                                 </form>
 
-                                            @endif
+                                            @endif --}}
                                             <form action="{{ route('admin.payments.destroy', $payment->id) }}"
                                                 method="POST" onsubmit="return confirm('Are you sure?');">
                                                 @csrf

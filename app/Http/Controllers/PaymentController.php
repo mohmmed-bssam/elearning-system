@@ -7,6 +7,8 @@ use App\Models\Enrollment;
 use App\Models\Payment;
 use App\Models\User;
 use App\Notifications\NewPaymentRequestNotification;
+use App\Notifications\PaymentApprovedNotification;
+use App\Notifications\StudentEnrolledNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,17 +51,33 @@ class PaymentController extends Controller
                 'user_id' => auth()->id(),
                 'course_id' => $course->id,
                 'amount' => $course->price,
-                'status' => 'pending',
+                'status' => 'paid',
                 'payment_gateway' => 'cash',
                 'transaction_number' => 'CASH-' . time(),
             ]);
+
+
+
+            Enrollment::create([
+                'user_id' => auth()->id(),
+                'course_id' => $course->id,
+                'status' => 'active',
+                'enrolled_at' => now(),
+            ]);
+
+            $student = User::where('id', auth()->id())->first();
+
+            $student->notify(new PaymentApprovedNotification($course));
+
+            $course->teacher->notify(new StudentEnrolledNotification($student, $course));
+
             $admins = User::where('role', 'admin')->get();
 
             foreach ($admins as $admin) {
                 $admin->notify(new NewPaymentRequestNotification());
             }
             flash()->success(
-                'Payment request sent successfully. Wait for admin approval.'
+                'Payment request sent successfully.'
             );
 
 

@@ -74,12 +74,12 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
             Route::put('settings', [DashboardController::class, 'settings_update'])->name('settings.update');
 
             // approve payment
-            Route::patch('/payments/{id}/approve', [PaymentController::class, 'approvePayment'])
-                ->name('payments.approve');
+            // Route::patch('/payments/{id}/approve', [PaymentController::class, 'approvePayment'])
+            //     ->name('payments.approve');
 
             // reject payment
-            Route::patch('/payments/{id}/reject', [PaymentController::class, 'rejectPayment'])
-                ->name('payments.reject');
+            // Route::patch('/payments/{id}/reject', [PaymentController::class, 'rejectPayment'])
+            //     ->name('payments.reject');
         });
     });
     Route::middleware(['auth', 'role:teacher'])->group(function () {

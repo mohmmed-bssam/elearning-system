@@ -20,68 +20,68 @@ class PaymentController extends Controller
             ->paginate(env('PAGE_SIZE'));
         return view('admin.payments.index', compact('payments'));
     }
-    public function approvePayment($id)
-    {
-        $payment = Payment::findOrFail($id);
+    // public function approvePayment($id)
+    // {
+    //     $payment = Payment::findOrFail($id);
 
-        if ($payment->status == 'paid') {
-            flash()->error('Payment already approved.');
-            return back();
-        }
+    //     if ($payment->status == 'paid') {
+    //         flash()->error('Payment already approved.');
+    //         return back();
+    //     }
 
-        // 1. تغيير الحالة
-        $payment->update([
-            'status' => 'paid'
-        ]);
+    //     // 1. تغيير الحالة
+    //     $payment->update([
+    //         'status' => 'paid'
+    //     ]);
 
-        // 2. إنشاء Enrollment إذا مش موجود
-        $exists = Enrollment::where('user_id', $payment->user_id)
-            ->where('course_id', $payment->course_id)
-            ->exists();
+    //     // 2. إنشاء Enrollment إذا مش موجود
+    //     $exists = Enrollment::where('user_id', $payment->user_id)
+    //         ->where('course_id', $payment->course_id)
+    //         ->exists();
 
-        if (!$exists) {
-            Enrollment::create([
-                'user_id' => $payment->user_id,
-                'course_id' => $payment->course_id,
-                'status'=>'active',
-                'enrolled_at'=>now(),
-            ]);
-            $course = $payment->course;
+    //     if (!$exists) {
+    //         Enrollment::create([
+    //             'user_id' => $payment->user_id,
+    //             'course_id' => $payment->course_id,
+    //             'status'=>'active',
+    //             'enrolled_at'=>now(),
+    //         ]);
+    //         $course = $payment->course;
 
-            $student = User::where('id', $payment->user_id )->first();
+    //         $student = User::where('id', $payment->user_id )->first();
 
-            $student->notify(new PaymentApprovedNotification($course));
-            flash()->success(
-                'request approval successfully.'
-            );
-            // للطالب
+    //         $student->notify(new PaymentApprovedNotification($course));
+    //         flash()->success(
+    //             'request approval successfully.'
+    //         );
+    //         // للطالب
 
 
-            // للمعلم
-             $course->teacher->notify(new StudentEnrolledNotification($student, $course));
-        }
+    //         // للمعلم
+    //          $course->teacher->notify(new StudentEnrolledNotification($student, $course));
+    //     }
 
-        flash()->success('Payment approved and student enrolled successfully.');
+    //     flash()->success('Payment approved and student enrolled successfully.');
 
-        return back();
-    }
-    public function rejectPayment($id)
-    {
-        $payment = Payment::findOrFail($id);
+    //     return back();
+    // }
+    // public function rejectPayment($id)
+    // {
+    //     $payment = Payment::findOrFail($id);
 
-        if ($payment->status != 'pending') {
-            flash()->error('This payment is already processed.');
-            return back();
-        }
+    //     if ($payment->status != 'pending') {
+    //         flash()->error('This payment is already processed.');
+    //         return back();
+    //     }
 
-        $payment->update([
-            'status' => 'Failed'
-        ]);
+    //     $payment->update([
+    //         'status' => 'Failed'
+    //     ]);
 
-        flash()->warning('Payment rejected successfully.');
+    //     flash()->warning('Payment rejected successfully.');
 
-        return back();
-    }
+    //     return back();
+    // }
 
 
 
