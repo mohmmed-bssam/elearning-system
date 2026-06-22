@@ -77,7 +77,8 @@
                                                 class="w-20 h-20 object-cover rounded">
 
                                             <a href="{{ route('admin.delete_gallery', $item->id) }}"
-                                                class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-700 del_image">
+                                                class="absolute -top-2 -right-2 bg-red-600 text-white rounded-full w-5 h-5 flex items-center
+                                                 justify-center text-xs hover:bg-red-700 del_image">
                                                 ✕
                                             </a>
                                         </div>
